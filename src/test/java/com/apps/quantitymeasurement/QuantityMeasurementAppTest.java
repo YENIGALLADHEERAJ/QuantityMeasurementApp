@@ -1,83 +1,72 @@
 package com.apps.quantitymeasurement;
 
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class QuantityMeasurementAppTest {
 
     @Test
-    public void testFeetEquality() {
+    public void yardEqualsFeet() {
         assertEquals(
                 new QuantityMeasurementApp.Length(
                         1,
-                        QuantityMeasurementApp.LengthUnit.FEET),
+                        QuantityMeasurementApp.LengthUnit.YARDS),
 
                 new QuantityMeasurementApp.Length(
-                        1,
+                        3,
                         QuantityMeasurementApp.LengthUnit.FEET)
         );
     }
 
     @Test
-    public void testInchesEquality() {
+    public void yardEqualsInches() {
         assertEquals(
                 new QuantityMeasurementApp.Length(
                         1,
-                        QuantityMeasurementApp.LengthUnit.INCHES),
+                        QuantityMeasurementApp.LengthUnit.YARDS),
 
                 new QuantityMeasurementApp.Length(
-                        1,
+                        36,
                         QuantityMeasurementApp.LengthUnit.INCHES)
         );
     }
 
     @Test
-    public void testFeetInchesComparison() {
+    public void centimeterEqualsInches() {
         assertEquals(
                 new QuantityMeasurementApp.Length(
                         1,
-                        QuantityMeasurementApp.LengthUnit.FEET),
+                        QuantityMeasurementApp.LengthUnit.CENTIMETERS),
 
                 new QuantityMeasurementApp.Length(
-                        12,
+                        0.393701,
                         QuantityMeasurementApp.LengthUnit.INCHES)
         );
     }
 
     @Test
-    public void testFeetInequality() {
+    public void sameYardsEqual() {
+        assertEquals(
+                new QuantityMeasurementApp.Length(
+                        2,
+                        QuantityMeasurementApp.LengthUnit.YARDS),
+
+                new QuantityMeasurementApp.Length(
+                        2,
+                        QuantityMeasurementApp.LengthUnit.YARDS)
+        );
+    }
+
+    @Test
+    public void differentValuesNotEqual() {
         assertNotEquals(
                 new QuantityMeasurementApp.Length(
                         1,
-                        QuantityMeasurementApp.LengthUnit.FEET),
+                        QuantityMeasurementApp.LengthUnit.YARDS),
 
                 new QuantityMeasurementApp.Length(
                         2,
                         QuantityMeasurementApp.LengthUnit.FEET)
         );
-    }
-
-    @Test
-    public void testInchesInequality() {
-        assertNotEquals(
-                new QuantityMeasurementApp.Length(
-                        1,
-                        QuantityMeasurementApp.LengthUnit.INCHES),
-
-                new QuantityMeasurementApp.Length(
-                        2,
-                        QuantityMeasurementApp.LengthUnit.INCHES)
-        );
-    }
-
-    @Test
-    public void testSameReference() {
-        QuantityMeasurementApp.Length length =
-                new QuantityMeasurementApp.Length(
-                        1,
-                        QuantityMeasurementApp.LengthUnit.FEET);
-
-        assertEquals(length, length);
     }
 }

@@ -4,7 +4,9 @@ public class QuantityMeasurementApp {
 
     public enum LengthUnit {
         FEET(12.0),
-        INCHES(1.0);
+        INCHES(1.0),
+        YARDS(36.0),
+        CENTIMETERS(0.393701);
 
         private final double conversionFactor;
 
@@ -27,7 +29,7 @@ public class QuantityMeasurementApp {
             this.unit = unit;
         }
 
-        private double convertToBaseUnit() {
+        private double toBaseInches() {
             return value * unit.getConversionFactor();
         }
 
@@ -42,10 +44,8 @@ public class QuantityMeasurementApp {
 
             Length other = (Length) obj;
 
-            return Double.compare(
-                    this.convertToBaseUnit(),
-                    other.convertToBaseUnit()
-            ) == 0;
+            return Math.abs(this.toBaseInches()
+                    - other.toBaseInches()) < 0.0001;
         }
     }
 }
