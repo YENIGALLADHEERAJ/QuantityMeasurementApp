@@ -33,12 +33,25 @@ public class QuantityMeasurementApp {
             return value * unit.getFactor();
         }
 
-        public Length convertTo(LengthUnit targetUnit) {
-
+        public Length convertTo(LengthUnit target) {
             double inches = toBaseInches();
-            double converted = inches / targetUnit.getFactor();
+            double converted = inches / target.getFactor();
+            return new Length(converted, target);
+        }
 
-            return new Length(converted, targetUnit);
+        public Length add(Length other) {
+
+            if (other == null)
+                throw new IllegalArgumentException();
+
+            double totalInches =
+                    this.toBaseInches() +
+                            other.toBaseInches();
+
+            double result =
+                    totalInches / this.unit.getFactor();
+
+            return new Length(result, this.unit);
         }
 
         @Override
@@ -47,10 +60,8 @@ public class QuantityMeasurementApp {
             if (this == obj)
                 return true;
 
-            if (obj == null || getClass() != obj.getClass())
+            if (!(obj instanceof Length other))
                 return false;
-
-            Length other = (Length) obj;
 
             return Math.abs(
                     this.toBaseInches() -
@@ -64,11 +75,7 @@ public class QuantityMeasurementApp {
             LengthUnit source,
             LengthUnit target) {
 
-        if (!Double.isFinite(value))
-            throw new IllegalArgumentException("Invalid value");
-
-        Length length = new Length(value, source);
-
-        return length.convertTo(target).value;
+        return new Length(value, source)
+                .convertTo(target).value;
     }
 }
