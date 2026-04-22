@@ -8,14 +8,14 @@ public class QuantityMeasurementApp {
         YARDS(36.0),
         CENTIMETERS(0.393701);
 
-        private final double conversionFactor;
+        private final double factor;
 
-        LengthUnit(double conversionFactor) {
-            this.conversionFactor = conversionFactor;
+        LengthUnit(double factor) {
+            this.factor = factor;
         }
 
-        public double getConversionFactor() {
-            return conversionFactor;
+        public double getFactor() {
+            return factor;
         }
     }
 
@@ -30,7 +30,15 @@ public class QuantityMeasurementApp {
         }
 
         private double toBaseInches() {
-            return value * unit.getConversionFactor();
+            return value * unit.getFactor();
+        }
+
+        public Length convertTo(LengthUnit targetUnit) {
+
+            double inches = toBaseInches();
+            double converted = inches / targetUnit.getFactor();
+
+            return new Length(converted, targetUnit);
         }
 
         @Override
@@ -44,8 +52,23 @@ public class QuantityMeasurementApp {
 
             Length other = (Length) obj;
 
-            return Math.abs(this.toBaseInches()
-                    - other.toBaseInches()) < 0.0001;
+            return Math.abs(
+                    this.toBaseInches() -
+                            other.toBaseInches()
+            ) < 0.0001;
         }
+    }
+
+    public static double convert(
+            double value,
+            LengthUnit source,
+            LengthUnit target) {
+
+        if (!Double.isFinite(value))
+            throw new IllegalArgumentException("Invalid value");
+
+        Length length = new Length(value, source);
+
+        return length.convertTo(target).value;
     }
 }
