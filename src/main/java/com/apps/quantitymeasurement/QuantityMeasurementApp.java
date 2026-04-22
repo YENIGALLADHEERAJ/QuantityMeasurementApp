@@ -2,47 +2,50 @@ package com.apps.quantitymeasurement;
 
 public class QuantityMeasurementApp {
 
-    public static class Feet {
+    public enum LengthUnit {
+        FEET(12.0),
+        INCHES(1.0);
 
-        private final double value;
+        private final double conversionFactor;
 
-        public Feet(double value) {
-            this.value = value;
+        LengthUnit(double conversionFactor) {
+            this.conversionFactor = conversionFactor;
         }
 
-        @Override
-        public boolean equals(Object obj) {
-            if (this == obj)
-                return true;
-
-            if (obj == null || getClass() != obj.getClass())
-                return false;
-
-            Feet other = (Feet) obj;
-
-            return Double.compare(this.value, other.value) == 0;
+        public double getConversionFactor() {
+            return conversionFactor;
         }
     }
 
-    public static class Inches {
+    public static class Length {
 
         private final double value;
+        private final LengthUnit unit;
 
-        public Inches(double value) {
+        public Length(double value, LengthUnit unit) {
             this.value = value;
+            this.unit = unit;
+        }
+
+        private double convertToBaseUnit() {
+            return value * unit.getConversionFactor();
         }
 
         @Override
         public boolean equals(Object obj) {
+
             if (this == obj)
                 return true;
 
             if (obj == null || getClass() != obj.getClass())
                 return false;
 
-            Inches other = (Inches) obj;
+            Length other = (Length) obj;
 
-            return Double.compare(this.value, other.value) == 0;
+            return Double.compare(
+                    this.convertToBaseUnit(),
+                    other.convertToBaseUnit()
+            ) == 0;
         }
     }
 }

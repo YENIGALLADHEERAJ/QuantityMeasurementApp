@@ -7,42 +7,77 @@ import static org.junit.jupiter.api.Assertions.*;
 public class QuantityMeasurementAppTest {
 
     @Test
-    public void testFeetEquality_SameValue() {
+    public void testFeetEquality() {
         assertEquals(
-                new QuantityMeasurementApp.Feet(1.0),
-                new QuantityMeasurementApp.Feet(1.0)
+                new QuantityMeasurementApp.Length(
+                        1,
+                        QuantityMeasurementApp.LengthUnit.FEET),
+
+                new QuantityMeasurementApp.Length(
+                        1,
+                        QuantityMeasurementApp.LengthUnit.FEET)
         );
     }
 
     @Test
-    public void testFeetEquality_DifferentValue() {
-        assertNotEquals(
-                new QuantityMeasurementApp.Feet(1.0),
-                new QuantityMeasurementApp.Feet(2.0)
-        );
-    }
-
-    @Test
-    public void testInchesEquality_SameValue() {
+    public void testInchesEquality() {
         assertEquals(
-                new QuantityMeasurementApp.Inches(1.0),
-                new QuantityMeasurementApp.Inches(1.0)
+                new QuantityMeasurementApp.Length(
+                        1,
+                        QuantityMeasurementApp.LengthUnit.INCHES),
+
+                new QuantityMeasurementApp.Length(
+                        1,
+                        QuantityMeasurementApp.LengthUnit.INCHES)
         );
     }
 
     @Test
-    public void testInchesEquality_DifferentValue() {
-        assertNotEquals(
-                new QuantityMeasurementApp.Inches(1.0),
-                new QuantityMeasurementApp.Inches(2.0)
+    public void testFeetInchesComparison() {
+        assertEquals(
+                new QuantityMeasurementApp.Length(
+                        1,
+                        QuantityMeasurementApp.LengthUnit.FEET),
+
+                new QuantityMeasurementApp.Length(
+                        12,
+                        QuantityMeasurementApp.LengthUnit.INCHES)
         );
     }
 
     @Test
-    public void testFeetAndInchesAreDifferentTypes() {
+    public void testFeetInequality() {
         assertNotEquals(
-                new QuantityMeasurementApp.Feet(1.0),
-                new QuantityMeasurementApp.Inches(1.0)
+                new QuantityMeasurementApp.Length(
+                        1,
+                        QuantityMeasurementApp.LengthUnit.FEET),
+
+                new QuantityMeasurementApp.Length(
+                        2,
+                        QuantityMeasurementApp.LengthUnit.FEET)
         );
+    }
+
+    @Test
+    public void testInchesInequality() {
+        assertNotEquals(
+                new QuantityMeasurementApp.Length(
+                        1,
+                        QuantityMeasurementApp.LengthUnit.INCHES),
+
+                new QuantityMeasurementApp.Length(
+                        2,
+                        QuantityMeasurementApp.LengthUnit.INCHES)
+        );
+    }
+
+    @Test
+    public void testSameReference() {
+        QuantityMeasurementApp.Length length =
+                new QuantityMeasurementApp.Length(
+                        1,
+                        QuantityMeasurementApp.LengthUnit.FEET);
+
+        assertEquals(length, length);
     }
 }
