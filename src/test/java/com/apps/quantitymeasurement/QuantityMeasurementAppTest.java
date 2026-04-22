@@ -1,37 +1,48 @@
 package com.apps.quantitymeasurement;
 
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class QuantityMeasurementAppTest {
 
     @Test
     public void testFeetEquality_SameValue() {
-        QuantityMeasurementApp.Feet f1 =
-                new QuantityMeasurementApp.Feet(1.0);
-
-        QuantityMeasurementApp.Feet f2 =
-                new QuantityMeasurementApp.Feet(1.0);
-
-        assertEquals(f1, f2);
+        assertEquals(
+                new QuantityMeasurementApp.Feet(1.0),
+                new QuantityMeasurementApp.Feet(1.0)
+        );
     }
 
     @Test
     public void testFeetEquality_DifferentValue() {
-        QuantityMeasurementApp.Feet f1 =
-                new QuantityMeasurementApp.Feet(1.0);
-
-        QuantityMeasurementApp.Feet f2 =
-                new QuantityMeasurementApp.Feet(2.0);
-
-        assertNotEquals(f1, f2);
+        assertNotEquals(
+                new QuantityMeasurementApp.Feet(1.0),
+                new QuantityMeasurementApp.Feet(2.0)
+        );
     }
 
     @Test
-    public void testFeetEquality_Null() {
-        QuantityMeasurementApp.Feet f1 =
-                new QuantityMeasurementApp.Feet(1.0);
+    public void testInchesEquality_SameValue() {
+        assertEquals(
+                new QuantityMeasurementApp.Inches(1.0),
+                new QuantityMeasurementApp.Inches(1.0)
+        );
+    }
 
-        assertNotEquals(f1, null);
+    @Test
+    public void testInchesEquality_DifferentValue() {
+        assertNotEquals(
+                new QuantityMeasurementApp.Inches(1.0),
+                new QuantityMeasurementApp.Inches(2.0)
+        );
+    }
+
+    @Test
+    public void testFeetAndInchesAreDifferentTypes() {
+        assertNotEquals(
+                new QuantityMeasurementApp.Feet(1.0),
+                new QuantityMeasurementApp.Inches(1.0)
+        );
     }
 }
