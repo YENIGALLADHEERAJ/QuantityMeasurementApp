@@ -1,5 +1,5 @@
 package com.apps.quantitymeasurement;
-
+// UC1 Feet Equality Implementation
 public class QuantityMeasurementApp {
 
     public static class Feet {
