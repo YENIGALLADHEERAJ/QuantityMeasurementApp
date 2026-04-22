@@ -34,24 +34,27 @@ public class QuantityMeasurementApp {
         }
 
         public Length convertTo(LengthUnit target) {
-            double inches = toBaseInches();
-            double converted = inches / target.getFactor();
+            double converted = toBaseInches() / target.getFactor();
             return new Length(converted, target);
         }
 
         public Length add(Length other) {
+            return add(other, this.unit);
+        }
 
-            if (other == null)
+        public Length add(Length other, LengthUnit targetUnit) {
+
+            if (other == null || targetUnit == null)
                 throw new IllegalArgumentException();
 
-            double totalInches =
+            double total =
                     this.toBaseInches() +
                             other.toBaseInches();
 
             double result =
-                    totalInches / this.unit.getFactor();
+                    total / targetUnit.getFactor();
 
-            return new Length(result, this.unit);
+            return new Length(result, targetUnit);
         }
 
         @Override
@@ -68,14 +71,5 @@ public class QuantityMeasurementApp {
                             other.toBaseInches()
             ) < 0.0001;
         }
-    }
-
-    public static double convert(
-            double value,
-            LengthUnit source,
-            LengthUnit target) {
-
-        return new Length(value, source)
-                .convertTo(target).value;
     }
 }
