@@ -2,39 +2,31 @@ package com.apps.quantitymeasurement;
 
 public class QuantityMeasurementApp {
 
-    public enum LengthUnit {
-        FEET(12.0),
-        INCHES(1.0),
-        YARDS(36.0),
-        CENTIMETERS(0.393701);
-
-        private final double factor;
-
-        LengthUnit(double factor) {
-            this.factor = factor;
-        }
-
-        public double getFactor() {
-            return factor;
-        }
-    }
-
     public static class Length {
 
         private final double value;
         private final LengthUnit unit;
 
         public Length(double value, LengthUnit unit) {
+
+            if (unit == null || !Double.isFinite(value))
+                throw new IllegalArgumentException();
+
             this.value = value;
             this.unit = unit;
         }
 
-        private double toBaseInches() {
-            return value * unit.getFactor();
+        private double toBase() {
+            return unit.convertToBaseUnit(value);
         }
 
         public Length convertTo(LengthUnit target) {
-            double converted = toBaseInches() / target.getFactor();
+
+            double converted =
+                    target.convertFromBaseUnit(
+                            this.toBase()
+                    );
+
             return new Length(converted, target);
         }
 
@@ -42,19 +34,19 @@ public class QuantityMeasurementApp {
             return add(other, this.unit);
         }
 
-        public Length add(Length other, LengthUnit targetUnit) {
+        public Length add(Length other, LengthUnit target) {
 
-            if (other == null || targetUnit == null)
+            if (other == null || target == null)
                 throw new IllegalArgumentException();
 
             double total =
-                    this.toBaseInches() +
-                            other.toBaseInches();
+                    this.toBase() +
+                            other.toBase();
 
             double result =
-                    total / targetUnit.getFactor();
+                    target.convertFromBaseUnit(total);
 
-            return new Length(result, targetUnit);
+            return new Length(result, target);
         }
 
         @Override
@@ -67,9 +59,13 @@ public class QuantityMeasurementApp {
                 return false;
 
             return Math.abs(
-                    this.toBaseInches() -
-                            other.toBaseInches()
+                    this.toBase() - other.toBase()
             ) < 0.0001;
+        }
+
+        @Override
+        public String toString() {
+            return value + " " + unit;
         }
     }
 }

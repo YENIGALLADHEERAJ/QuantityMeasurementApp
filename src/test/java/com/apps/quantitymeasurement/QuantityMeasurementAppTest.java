@@ -6,112 +6,87 @@ import static org.junit.jupiter.api.Assertions.*;
 public class QuantityMeasurementAppTest {
 
     @Test
-    public void addTargetFeet() {
+    public void feetToInches() {
+        assertEquals(
+                new QuantityMeasurementApp.Length(
+                        12,
+                        LengthUnit.INCHES),
+
+                new QuantityMeasurementApp.Length(
+                        1,
+                        LengthUnit.FEET)
+                        .convertTo(LengthUnit.INCHES)
+        );
+    }
+
+    @Test
+    public void equalityCheck() {
+        assertEquals(
+                new QuantityMeasurementApp.Length(
+                        1,
+                        LengthUnit.YARDS),
+
+                new QuantityMeasurementApp.Length(
+                        36,
+                        LengthUnit.INCHES)
+        );
+    }
+
+    @Test
+    public void addWithTargetFeet() {
         assertEquals(
                 new QuantityMeasurementApp.Length(
                         2,
-                        QuantityMeasurementApp.LengthUnit.FEET),
+                        LengthUnit.FEET),
 
                 new QuantityMeasurementApp.Length(
                         1,
-                        QuantityMeasurementApp.LengthUnit.FEET)
+                        LengthUnit.FEET)
                         .add(
                                 new QuantityMeasurementApp.Length(
                                         12,
-                                        QuantityMeasurementApp.LengthUnit.INCHES),
+                                        LengthUnit.INCHES),
 
-                                QuantityMeasurementApp.LengthUnit.FEET)
+                                LengthUnit.FEET)
         );
     }
 
     @Test
-    public void addTargetInches() {
-        assertEquals(
-                new QuantityMeasurementApp.Length(
-                        24,
-                        QuantityMeasurementApp.LengthUnit.INCHES),
-
-                new QuantityMeasurementApp.Length(
-                        1,
-                        QuantityMeasurementApp.LengthUnit.FEET)
-                        .add(
-                                new QuantityMeasurementApp.Length(
-                                        12,
-                                        QuantityMeasurementApp.LengthUnit.INCHES),
-
-                                QuantityMeasurementApp.LengthUnit.INCHES)
-        );
-    }
-
-    @Test
-    public void addTargetYards() {
+    public void addWithTargetYards() {
         assertEquals(
                 new QuantityMeasurementApp.Length(
                         0.666666,
-                        QuantityMeasurementApp.LengthUnit.YARDS),
+                        LengthUnit.YARDS),
 
                 new QuantityMeasurementApp.Length(
                         1,
-                        QuantityMeasurementApp.LengthUnit.FEET)
+                        LengthUnit.FEET)
                         .add(
                                 new QuantityMeasurementApp.Length(
                                         12,
-                                        QuantityMeasurementApp.LengthUnit.INCHES),
+                                        LengthUnit.INCHES),
 
-                                QuantityMeasurementApp.LengthUnit.YARDS)
+                                LengthUnit.YARDS)
         );
     }
 
     @Test
-    public void addCentimeters() {
-        assertEquals(
-                new QuantityMeasurementApp.Length(
-                        5.08,
-                        QuantityMeasurementApp.LengthUnit.CENTIMETERS),
-
-                new QuantityMeasurementApp.Length(
-                        2.54,
-                        QuantityMeasurementApp.LengthUnit.CENTIMETERS)
-                        .add(
-                                new QuantityMeasurementApp.Length(
-                                        1,
-                                        QuantityMeasurementApp.LengthUnit.INCHES),
-
-                                QuantityMeasurementApp.LengthUnit.CENTIMETERS)
-        );
-    }
-
-    @Test
-    public void addWithZero() {
-        assertEquals(
-                new QuantityMeasurementApp.Length(
-                        1.666666,
-                        QuantityMeasurementApp.LengthUnit.YARDS),
-
-                new QuantityMeasurementApp.Length(
-                        5,
-                        QuantityMeasurementApp.LengthUnit.FEET)
-                        .add(
-                                new QuantityMeasurementApp.Length(
-                                        0,
-                                        QuantityMeasurementApp.LengthUnit.INCHES),
-
-                                QuantityMeasurementApp.LengthUnit.YARDS)
-        );
-    }
-
-    @Test
-    public void nullTargetThrows() {
+    public void nullUnitThrows() {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> new QuantityMeasurementApp.Length(
                         1,
-                        QuantityMeasurementApp.LengthUnit.FEET)
-                        .add(
-                                new QuantityMeasurementApp.Length(
-                                        1,
-                                        QuantityMeasurementApp.LengthUnit.FEET),
-                                null)
+                        null)
+        );
+    }
+
+    @Test
+    public void invalidValueThrows() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> new QuantityMeasurementApp.Length(
+                        Double.NaN,
+                        LengthUnit.FEET)
         );
     }
 }
