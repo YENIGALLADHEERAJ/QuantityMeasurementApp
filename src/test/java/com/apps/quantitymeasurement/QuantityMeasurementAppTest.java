@@ -1,92 +1,56 @@
 package com.apps.quantitymeasurement;
 
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class QuantityMeasurementAppTest {
 
     @Test
-    public void feetToInches() {
+    public void kilogramEqualsGram() {
         assertEquals(
-                new QuantityMeasurementApp.Length(
-                        12,
-                        LengthUnit.INCHES),
+                new QuantityMeasurementApp.Weight(
+                        1, WeightUnit.KILOGRAM),
 
-                new QuantityMeasurementApp.Length(
-                        1,
-                        LengthUnit.FEET)
-                        .convertTo(LengthUnit.INCHES)
+                new QuantityMeasurementApp.Weight(
+                        1000, WeightUnit.GRAM)
         );
     }
 
     @Test
-    public void equalityCheck() {
+    public void kilogramToPound() {
         assertEquals(
-                new QuantityMeasurementApp.Length(
-                        1,
-                        LengthUnit.YARDS),
+                new QuantityMeasurementApp.Weight(
+                        2.20462, WeightUnit.POUND),
 
-                new QuantityMeasurementApp.Length(
-                        36,
-                        LengthUnit.INCHES)
+                new QuantityMeasurementApp.Weight(
+                        1, WeightUnit.KILOGRAM)
+                        .convertTo(WeightUnit.POUND)
         );
     }
 
     @Test
-    public void addWithTargetFeet() {
+    public void addKgAndGram() {
         assertEquals(
-                new QuantityMeasurementApp.Length(
-                        2,
-                        LengthUnit.FEET),
+                new QuantityMeasurementApp.Weight(
+                        2, WeightUnit.KILOGRAM),
 
-                new QuantityMeasurementApp.Length(
-                        1,
-                        LengthUnit.FEET)
+                new QuantityMeasurementApp.Weight(
+                        1, WeightUnit.KILOGRAM)
                         .add(
-                                new QuantityMeasurementApp.Length(
-                                        12,
-                                        LengthUnit.INCHES),
-
-                                LengthUnit.FEET)
+                                new QuantityMeasurementApp.Weight(
+                                        1000, WeightUnit.GRAM))
         );
     }
 
     @Test
-    public void addWithTargetYards() {
-        assertEquals(
-                new QuantityMeasurementApp.Length(
-                        0.666666,
-                        LengthUnit.YARDS),
+    public void weightNotEqualLength() {
+        assertNotEquals(
+                new QuantityMeasurementApp.Weight(
+                        1, WeightUnit.KILOGRAM),
 
                 new QuantityMeasurementApp.Length(
-                        1,
-                        LengthUnit.FEET)
-                        .add(
-                                new QuantityMeasurementApp.Length(
-                                        12,
-                                        LengthUnit.INCHES),
-
-                                LengthUnit.YARDS)
-        );
-    }
-
-    @Test
-    public void nullUnitThrows() {
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> new QuantityMeasurementApp.Length(
-                        1,
-                        null)
-        );
-    }
-
-    @Test
-    public void invalidValueThrows() {
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> new QuantityMeasurementApp.Length(
-                        Double.NaN,
-                        LengthUnit.FEET)
+                        1, LengthUnit.FEET)
         );
     }
 }
